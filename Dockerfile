@@ -1,7 +1,3 @@
-###################
-# BUILD FOR LOCAL DEVELOPMENT
-###################
-
 FROM node:18-alpine As development
 
 WORKDIR /usr/src/app
@@ -11,10 +7,6 @@ COPY package*.json ./
 RUN yarn install
 
 COPY . .
-
-###################
-# BUILD FOR PRODUCTION
-###################
 
 FROM development As build
 
@@ -27,10 +19,6 @@ COPY . .
 RUN yarn run build
 
 RUN yarn install --production=true && yarn cache clean
-
-###################
-# PRODUCTION
-###################
 
 FROM build As production
 
